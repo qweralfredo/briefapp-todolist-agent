@@ -1,0 +1,82 @@
+---
+description: Fractal orchestration methodology for converting high-level intentions into traceable, safe, executable work units via Briefapp MCP. Use ALWAYS when the user mentions: atomic flow, fractal planning, complexity multiplier, large epic, structural refactor, complex feature with multiple domains, hierarchical task decomposition, or when planning needs to scale beyond a simple sprint. Also activate when the user says "C=2", "C=3", "use atomic flow" or any variant.
+globs:
+alwaysApply: false
+---
+
+# Briefapp Atomic Flow — Cursor Skill
+
+## Overview
+
+The **Atomic-Agent Flow** is a fractal planning methodology where the **Complexity Multiplier C** defines the density of work decomposition. The higher C, the more granular and traceable the result.
+
+## Step 0 — Choose Complexity Multiplier (C)
+
+| C   | Typical Scenario                            | Backlogs | Sprints/Backlog | Tasks/Sprint | Subtasks/Task |
+|-----|---------------------------------------------|----------|-----------------|--------------|---------------|
+| 0.2 | Point fix / isolated bug                    | 1        | 1               | 1            | 1             |
+| 0.5 | Small feature / simple improvement          | 3        | 1               | 2            | 2             |
+| 1   | New module / medium initiative              | 5        | 2               | 3            | 4             |
+| 2   | Complex feature / multiple domains          | 10       | 4               | 6            | 8             |
+| 3   | Structural refactor / large epic            | 15       | 6               | 9            | 12            |
+
+> **Formula:** Backlogs = 5×C | Sprints/Backlog = 2×C | Tasks/Sprint = 3×C | Subtasks/Task = 4×C
+
+## Step 1 — CSV Planning
+
+Before any MCP mass creation, draft the full plan in `briefapp_plan.csv`:
+```csv
+Type,ID,Title,Description,ParentID,Status
+Box,box1,"Module Name","Description",,todo
+Backlog,B1,"Functional Area","Description",box1,todo
+Sprint,S1,"Sprint 1","",B1,todo
+Task,T1,"Task 1.1","Description",S1,todo
+Subtask,ST1,"Subtask 1.1.1","Do X",T1,todo
+```
+
+## Step 2 — 3-Level Branch Architecture
+
+`develop` → `feature/{backlog_id}` → `task/{task_id}`
+
+Subtasks DO NOT create branches and are worked directly on the task branch. Merge bubble-up on completion:
+```bash
+git checkout feature/{backlog_id} && git merge task/{task_id} --no-ff && git branch -d task/{task_id}
+git checkout develop && git merge feature/{backlog_id} --no-ff && git branch -d feature/{backlog_id}
+```
+
+## Step 3 — TDD per Subtask (Red → Green → Refactor)
+
+| Step | Action | Commit format |
+|------|--------|---------------|
+| 🔴 RED | Write test BEFORE implementation — must fail | `test: add failing test for <feature>` |
+| 🟢 GREEN | Minimum implementation to pass — no over-engineering | `feat: implement <feature> to pass tests` |
+| 🔵 REFACTOR | Clean code; all tests must keep passing | `refactor: clean up <feature>` |
+
+**Minimum coverage: ≥ 80%**
+
+## Step 4 — Commit Traceability Footer
+
+Every commit MUST contain:
+```
+<type>: <short description>
+
+Refs: backlog/<id> | sprint/<id> | task/<id>
+```
+
+## Step 5 — Status Sync
+
+| Event | Tool | Status |
+|-------|------|--------|
+| Subtask created | `workitem_update` | `"todo"` |
+| Starting implementation | `workitem_update` | `"in_progress"` |
+| Subtask completed | `workitem_update` + commit | `"done"` |
+| Blocked | `workitem_update` | `"blocked"` |
+
+## Non-Negotiable Rules
+
+- Never generate code without prior test — TDD is mandatory
+- Never skip CSV checkpoint before MCP mass creation
+- Never omit `Refs:` block in any commit
+- Coverage < 80% = subtask not completed
+- No silent mock/fallback in runtime
+- Start next subtask only after committing and closing current one

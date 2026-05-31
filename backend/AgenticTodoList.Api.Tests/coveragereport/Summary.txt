@@ -1,0 +1,106 @@
+Summary
+  Generated on: 14/04/2026 - 11:35:53
+  Coverage date: 19/03/2026 - 19:18:03 - 14/04/2026 - 11:35:30
+  Parser: MultiReport (13x Cobertura)
+  Assemblies: 1
+  Classes: 84
+  Files: 52
+  Line coverage: 17.7%
+  Covered lines: 2177
+  Uncovered lines: 10062
+  Coverable lines: 12239
+  Total lines: 13644
+  Branch coverage: 34% (141 of 414)
+  Covered branches: 141
+  Total branches: 414
+  Method coverage: 85% (443 of 521)
+  Full method coverage: 83.4% (435 of 521)
+  Covered methods: 443
+  Fully covered methods: 435
+  Total methods: 521
+
+AgenticTodoList.Api                                                        17.7%
+  AgenticTodoList.Api.Contracts.AddAgentRunLogRequest                       100%
+  AgenticTodoList.Api.Contracts.AddBacklogItemRequest                       100%
+  AgenticTodoList.Api.Contracts.AddCheckpointRequest                        100%
+  AgenticTodoList.Api.Contracts.AddReviewRequest                            100%
+  AgenticTodoList.Api.Contracts.AddWikiPageRequest                          100%
+  AgenticTodoList.Api.Contracts.CreateProjectRequest                        100%
+  AgenticTodoList.Api.Contracts.CreateSprintRequest                         100%
+  AgenticTodoList.Api.Contracts.DashboardDto                                100%
+  AgenticTodoList.Api.Contracts.McpRequest                                  100%
+  AgenticTodoList.Api.Contracts.McpResponse                                 100%
+  AgenticTodoList.Api.Contracts.UpdateWorkItemStatusRequest                 100%
+  AgenticTodoList.Api.Data.AppDbContext                                     100%
+  AgenticTodoList.Api.Domain.AgentRunLogEntity                              100%
+  AgenticTodoList.Api.Domain.BacklogItemEntity                              100%
+  AgenticTodoList.Api.Domain.KnowledgeCheckpointEntity                      100%
+  AgenticTodoList.Api.Domain.ProjectEntity                                  100%
+  AgenticTodoList.Api.Domain.ReviewEntity                                   100%
+  AgenticTodoList.Api.Domain.SprintEntity                                   100%
+  AgenticTodoList.Api.Domain.WikiPageEntity                                 100%
+  AgenticTodoList.Api.Domain.WorkItemEntity                                 100%
+  AgenticTodoList.Api.Services.ScrumService                                 100%
+  Microsoft.AspNetCore.OpenApi.Generated                                      0%
+  BriefappTodoList.Api.Contracts.AddAgentRunLogRequest                       100%
+  BriefappTodoList.Api.Contracts.AddBacklogItemRequest                       100%
+  BriefappTodoList.Api.Contracts.AddBoxUserRequest                           100%
+  BriefappTodoList.Api.Contracts.AddCheckpointRequest                        100%
+  BriefappTodoList.Api.Contracts.AddDocumentationPageRequest                 100%
+  BriefappTodoList.Api.Contracts.AddReviewRequest                            100%
+  BriefappTodoList.Api.Contracts.AddSubTaskRequest                           100%
+  BriefappTodoList.Api.Contracts.AddWikiPageRequest                          100%
+  BriefappTodoList.Api.Contracts.BoxUsageSummaryDto                          100%
+  BriefappTodoList.Api.Contracts.CreateApiKeyRequest                         100%
+  BriefappTodoList.Api.Contracts.CreateLogRequest                            100%
+  BriefappTodoList.Api.Contracts.CreateProjectRequest                        100%
+  BriefappTodoList.Api.Contracts.CreateSprintRequest                         100%
+  BriefappTodoList.Api.Contracts.DashboardDto                                100%
+  BriefappTodoList.Api.Contracts.HumanEvaluationDto                          100%
+  BriefappTodoList.Api.Contracts.SubmitHumanEvaluationRequest                100%
+  BriefappTodoList.Api.Contracts.UpdateBacklogItemContextRequest             100%
+  BriefappTodoList.Api.Contracts.UpdateBoxUserRequest                        100%
+  BriefappTodoList.Api.Contracts.UpdateProjectConfigRequest                  100%
+  BriefappTodoList.Api.Contracts.UpdateSprintCommitIdsRequest                100%
+  BriefappTodoList.Api.Contracts.UpdateWorkItemStatusRequest                 100%
+  BriefappTodoList.Api.Contracts.UpsertAllowListRequest                      100%
+  BriefappTodoList.Api.Contracts.UpsertMemoryRequest                         100%
+  BriefappTodoList.Api.Data.AppDbContext                                     100%
+  BriefappTodoList.Api.Domain.AgentRunLogEntity                              100%
+  BriefappTodoList.Api.Domain.AllowListEntity                               87.5%
+  BriefappTodoList.Api.Domain.BacklogItemEntity                              100%
+  BriefappTodoList.Api.Domain.BoxApiKeyEntity                               76.9%
+  BriefappTodoList.Api.Domain.BoxLogEntity                                  87.5%
+  BriefappTodoList.Api.Domain.BoxUserEntity                                 87.5%
+  BriefappTodoList.Api.Domain.DocumentationPageEntity                        100%
+  BriefappTodoList.Api.Domain.HumanEvaluationEntity                         92.3%
+  BriefappTodoList.Api.Domain.KnowledgeCheckpointEntity                      100%
+  BriefappTodoList.Api.Domain.MemoryItemEntity                              87.5%
+  BriefappTodoList.Api.Domain.ProjectEntity                                  100%
+  BriefappTodoList.Api.Domain.ReviewEntity                                   100%
+  BriefappTodoList.Api.Domain.SprintEntity                                  91.6%
+  BriefappTodoList.Api.Domain.WikiPageEntity                                 100%
+  BriefappTodoList.Api.Domain.WorkItemEntity                                86.9%
+  BriefappTodoList.Api.Domain.WorkItemFeedbackEntity                          90%
+  BriefappTodoList.Api.Migrations.AddAllowList                                 0%
+  BriefappTodoList.Api.Migrations.AddBoxApiKeys                                0%
+  BriefappTodoList.Api.Migrations.AddBoxLogs                                   0%
+  BriefappTodoList.Api.Migrations.AddBoxUsers                                  0%
+  BriefappTodoList.Api.Migrations.AddMemoryItems                               0%
+  BriefappTodoList.Api.Migrations.AppDbContextModelSnapshot                    0%
+  BriefappTodoList.Api.Migrations.DevLakeMetricsAndHumanEvaluation             0%
+  BriefappTodoList.Api.Migrations.InitialCreate                                0%
+  BriefappTodoList.Api.Migrations.KnowledgeCategorizationAndDocumentation      0%
+  BriefappTodoList.Api.Migrations.MultiCommitIdsForBacklogSprintWorkItem       0%
+  BriefappTodoList.Api.Migrations.ProjectConfig                                0%
+  BriefappTodoList.Api.Migrations.ProjectSoftDeleteStatus                      0%
+  BriefappTodoList.Api.Migrations.SubTasksContextFirstAndBranch                0%
+  BriefappTodoList.Api.Migrations.WorkItemTokenTrackingAndFeedback             0%
+  BriefappTodoList.Api.Services.ApiKeyService                                100%
+  BriefappTodoList.Api.Services.DevLakeSyncService                          16.6%
+  BriefappTodoList.Api.Services.DevLakeSyncWorker                           58.6%
+  BriefappTodoList.Api.Services.MetricsEvent                                 100%
+  BriefappTodoList.Api.Services.MetricsEventService                          100%
+  BriefappTodoList.Api.Services.ScrumService                                89.5%
+  Program                                                                  93.1%
+  System.Runtime.CompilerServices                                             0%

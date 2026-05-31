@@ -1,0 +1,57 @@
+bin/
+obj/
+**/bin/
+**/obj/
+.vscode/
+frontend/node_modules/
+frontend/dist/
+backend/**/TestResults/
+
+# PostgreSQL data volumes (never commit raw PG data)
+ops/postgres/data/
+ops/postgres/data_v3/
+ops/postgres/backups/
+ops/postgres/**/postmaster.pid
+ops/postgres/**/postmaster.opts
+
+# ── Python (global — covers all Python projects in the monorepo) ──────────────
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.venv/
+**/venv/
+**/env/
+**/.coverage
+**/htmlcov/
+**/.pytest_cache/
+**/*.egg-info/
+**/dist/
+**/build/
+**/.mypy_cache/
+**/.ruff_cache/
+
+.playwright-mcp/
+
+# E2E / Playwright test artifacts
+e2e/test-results/
+e2e/.cache/
+**/test-results/
+**/playwright-report/
+
+# Environment secrets
+.env
+.env.local
+.env*.local
+*.env.secret
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+# Minio Data
+ops/minio/data/
+.token_cache/
+credentials.json
+.onedrive_token.json
+.gemini/settings.json
+.worktrees/

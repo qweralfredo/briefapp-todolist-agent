@@ -1,0 +1,11 @@
+{
+  "name": "briefapp-todolist",
+  "version": "1.0.0",
+  "mcpServers": {
+    "briefapp-todolist": {
+      "command": "python",
+      "args": ["server.py"],
+      "cwd": "${extensionPath}/mcp-server-python"
+    }
+  }
+}

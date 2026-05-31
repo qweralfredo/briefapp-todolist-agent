@@ -1,0 +1,3 @@
+[submodule "extensions/workspace"]
+	path = extensions/workspace
+	url = https://github.com/gemini-cli-extensions/workspace

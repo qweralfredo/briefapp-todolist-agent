@@ -1,0 +1,13 @@
+mcp>=1.7.1
+httpx>=0.28.1
+pydriller>=2.6
+networkx>=3.4
+psycopg2-binary>=2.9
+fastapi
+uvicorn
+google-genai
+pydantic
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+msal

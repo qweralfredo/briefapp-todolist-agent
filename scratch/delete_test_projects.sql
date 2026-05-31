@@ -1,0 +1,8 @@
+DELETE FROM "BacklogItems" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "Sprints" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "WorkItems" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "WikiPages" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "DocumentationPages" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "KnowledgeCheckpoints" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "AgentRunLogs" WHERE "ProjectId" IN (SELECT "Id" FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%');
+DELETE FROM "Projects" WHERE "Name" ILIKE '%teste%' OR "Name" ILIKE '%test %' OR "Name" ILIKE '%Test %' OR "Name" ILIKE '%Test Suite%' OR "Name" ILIKE '%CRM%';

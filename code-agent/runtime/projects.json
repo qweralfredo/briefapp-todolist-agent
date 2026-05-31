@@ -1,0 +1,10 @@
+[
+  {
+    "id": "1622a9fb-0836-4eb1-963b-0305b3f54d33",
+    "name": "Default",
+    "slug": "default",
+    "description": "Default workspace for sessions without a specific project.",
+    "createdAt": "2026-03-24T01:45:27.319Z",
+    "workspacePath": "C:\\projetos\\todolist\\code-agent\\runtime\\workspace\\default"
+  }
+]

@@ -1,0 +1,15 @@
+﻿services:
+  code-agent:
+    build:
+      context: .
+    container_name: code-agent
+    environment:
+      PORT: 8787
+      OLLAMA_BASE_URL: http://host.docker.internal:9434
+      OLLAMA_MODEL: gemma2:2b
+      CODE_AGENT_RUNTIME_DIR: /app/runtime
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./runtime:/app/runtime
+      - ./skills:/app/skills

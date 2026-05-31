@@ -1,0 +1,4 @@
+runtime/sessions/*.json
+runtime/workspace/*
+!runtime/workspace/.gitkeep
+*.log

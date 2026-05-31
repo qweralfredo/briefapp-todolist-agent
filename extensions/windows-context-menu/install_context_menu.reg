@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\BriefappSend]
+@="Briefapp: Enviar Arquivo"
+"Icon"="C:\\briefapp\\todolist-context-extension\\extensions\\windows-context-menu\\icons\\briefapp.ico"
+
+[HKEY_CLASSES_ROOT\*\shell\BriefappSend\command]
+@="python \"C:\\briefapp\\todolist-context-extension\\extensions\\windows-context-menu\\egeria_handler.py\" \"%1\""

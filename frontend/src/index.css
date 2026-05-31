@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* ======================== BriefApp Design Tokens ======================== */
+:root {
+  --brief-primary: #e9506e;
+  --brief-primary-light: #ff6b8a;
+  --brief-primary-dark: #c73a57;
+  --brief-navy: #0f172a;
+  --brief-navy-light: #1e293b;
+  --brief-radius: 10px;
+
+  font-family: 'Inter', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #0f172a;
+  background: #f8f9fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ======================== Reset ======================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: transparent;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ======================== Scrollbar ======================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(233, 80, 110, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(233, 80, 110, 0.4);
+}
+
+/* ======================== Micro-animations ======================== */
+@keyframes brief-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes brief-slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes brief-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(233, 80, 110, 0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(233, 80, 110, 0); }
+}
+
+/* ======================== Gradient text utility ======================== */
+.brief-gradient-text {
+  background: linear-gradient(135deg, #e9506e 0%, #ff6b8a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ======================== Glass card utility ======================== */
+.brief-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(233, 80, 110, 0.1);
+  border-radius: var(--brief-radius);
+}

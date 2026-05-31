@@ -1,0 +1,55 @@
+# ===========================================================================
+# OpenClaw v3 — Multi-Channel Gateway (SP-BOX4-01 ST-39)
+# Ports: 9700 (HTTP/Admin), 9701 (Webhook receiver internal)
+# ===========================================================================
+services:
+  openclaw:
+    image: openclawai/openclaw:v3
+    container_name: briefapp-openclaw
+    restart: unless-stopped
+    ports:
+      - "9700:3000"
+    volumes:
+      - openclaw-data:/data
+      - openclaw-sessions:/sessions
+    environment:
+      # Admin auth key — override via .env
+      OPENCLAW_ADMIN_KEY: ${OPENCLAW_ADMIN_KEY:-openclaw-dev-key}
+      # Where OpenClaw sends inbound webhook events
+      OPENCLAW_WEBHOOK_URL: ${OPENCLAW_WEBHOOK_URL:-http://api:8080/api/openclaw/webhook}
+      # Secret for HMAC signing of webhook payloads
+      OPENCLAW_WEBHOOK_SECRET: ${OPENCLAW_WEBHOOK_SECRET:-openclaw-hmac-secret}
+      OPENCLAW_LOG_LEVEL: ${OPENCLAW_LOG_LEVEL:-info}
+      # Channel specific env vars (set these in production .env)
+      # WhatsApp — Baileys (local device pairing via QR code)
+      WHATSAPP_ENABLED: ${WHATSAPP_ENABLED:-false}
+      WHATSAPP_MODE: ${WHATSAPP_MODE:-baileys}  # baileys | cloud-api
+      WHATSAPP_PHONE_NUMBER: ${WHATSAPP_PHONE_NUMBER:-}
+      WHATSAPP_CLOUD_API_TOKEN: ${WHATSAPP_CLOUD_API_TOKEN:-}
+      # Slack
+      SLACK_ENABLED: ${SLACK_ENABLED:-false}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
+      SLACK_SIGNING_SECRET: ${SLACK_SIGNING_SECRET:-}
+      SLACK_APP_ID: ${SLACK_APP_ID:-}
+      # Telegram
+      TELEGRAM_ENABLED: ${TELEGRAM_ENABLED:-false}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - briefapp-net
+
+volumes:
+  openclaw-data:
+    name: briefapp-openclaw-data
+  openclaw-sessions:
+    name: briefapp-openclaw-sessions
+
+networks:
+  briefapp-net:
+    external: true
+    name: briefapp-net

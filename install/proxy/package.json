@@ -1,0 +1,9 @@
+{
+  "name": "briefapp-mcp-proxy",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0"
+  }
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
+  xmlns:desktop5="http://schemas.microsoft.com/appx/manifest/desktop/windows10/5"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  IgnorableNamespaces="uap uap2 uap3 rescap desktop4 desktop5 com">
+
+  <Identity Name="Briefapp.ContextMenu" Publisher="CN=Briefapp" Version="1.0.0.0" ProcessorArchitecture="x64" />
+  
+  <Properties>
+    <DisplayName>Briefapp V3 Context Menu</DisplayName>
+    <PublisherDisplayName>Briefapp</PublisherDisplayName>
+    <Logo>icons\briefapp.png</Logo>
+  </Properties>
+  
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+  
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.22000.0" />
+  </Dependencies>
+  
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="unvirtualizedResources"/>
+  </Capabilities>
+  
+  <Applications>
+    <Application Id="BriefappContext" Executable="launcher.vbs" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="Briefapp" Description="Briefapp Context Menu" BackgroundColor="transparent" Square150x150Logo="icons\briefapp.png" Square44x44Logo="icons\briefapp.png" />
+      <Extensions>
+        <!-- Top Leve Win 11 Context Menu Extension via IExplorerCommand -->
+        <desktop4:Extension Category="windows.fileExplorerContextMenus">
+          <desktop4:FileExplorerContextMenus>
+            <!-- Items -> Any File -->
+            <desktop5:ItemType Type="*">
+              <desktop5:Verb Id="PandorizeThis" Clsid="0b01b630-14e4-4d1a-be10-d8a4ba5bbbf3" />
+            </desktop5:ItemType>
+            <!-- Directory -> Any Folder -->
+            <desktop5:ItemType Type="Directory">
+              <desktop5:Verb Id="PandorizeThis" Clsid="0b01b630-14e4-4d1a-be10-d8a4ba5bbbf3" />
+            </desktop5:ItemType>
+          </desktop4:FileExplorerContextMenus>
+        </desktop4:Extension>
+        
+        <!-- COM Server Mapping for the C# in-process DLL -->
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:SurrogateServer DisplayName="Briefapp Win11 Context Menu">
+              <!-- Point directly to our compiled comhost DLL from Option 1! -->
+              <com:Class Id="0b01b630-14e4-4d1a-be10-d8a4ba5bbbf3" Path="src\WinMenu\bin\Release\net10.0-windows\win-x64\Briefapp.WinMenu.comhost.dll" ThreadingModel="STA"/>
+            </com:SurrogateServer>
+          </com:ComServer>
+        </com:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>

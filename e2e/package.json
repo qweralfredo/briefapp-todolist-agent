@@ -1,0 +1,22 @@
+{
+  "name": "briefapp-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test tests/02-frontend-token-insights.spec.ts tests/04-api-data-verification.spec.ts --grep='API'",
+    "test:frontend": "playwright test tests/01-frontend-kanban.spec.ts tests/02-frontend-token-insights.spec.ts",
+    "test:box1": "playwright test tests/07-box1-sandbox-engine.spec.ts",
+    "test:box2": "playwright test tests/08-box2-queue-lock.spec.ts",
+    "test:box3": "playwright test tests/09-box3-circuit-breaker.spec.ts",
+    "test:box4": "playwright test tests/10-box4-openclaw-gateway.spec.ts",
+    "test:boxes": "playwright test tests/07-box1-sandbox-engine.spec.ts tests/08-box2-queue-lock.spec.ts tests/09-box3-circuit-breaker.spec.ts tests/10-box4-openclaw-gateway.spec.ts",
+    "test:integration": "playwright test tests/11-cross-box-integration.spec.ts",
+    "test:v3": "playwright test tests/07-box1-sandbox-engine.spec.ts tests/08-box2-queue-lock.spec.ts tests/09-box3-circuit-breaker.spec.ts tests/10-box4-openclaw-gateway.spec.ts tests/11-cross-box-integration.spec.ts",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "@types/node": "^20.0.0"
+  }
+}

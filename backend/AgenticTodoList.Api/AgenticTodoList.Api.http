@@ -1,0 +1,37 @@
+﻿@ApiHostAddress = http://localhost:5146
+@projectId = 00000000-0000-0000-0000-000000000000
+
+GET {{ApiHostAddress}}/health
+Accept: application/json
+
+###
+
+# API - listar projetos ativos
+GET {{ApiHostAddress}}/api/projects
+Accept: application/json
+
+###
+
+# API - listar projetos incluindo arquivados
+GET {{ApiHostAddress}}/api/projects?includeArchived=true
+Accept: application/json
+
+###
+
+# API - criar projeto
+POST {{ApiHostAddress}}/api/projects
+Content-Type: application/json
+
+{
+	"name": "Projeto via REST",
+	"description": "Criado pelo arquivo .http"
+}
+
+###
+
+# API - arquivar projeto (soft delete)
+DELETE {{ApiHostAddress}}/api/projects/{{projectId}}
+Content-Type: application/json
+
+###
+

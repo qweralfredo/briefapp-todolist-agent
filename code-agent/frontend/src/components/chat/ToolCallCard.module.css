@@ -1,0 +1,52 @@
+.card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  font-size: var(--text-sm);
+  margin: 4px 0;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  background: var(--color-surface-raised);
+  border: none;
+  color: var(--color-fg-muted);
+  padding: 6px 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--text-sm);
+}
+
+.toggle:hover { background: #2a313a; }
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.label { font-weight: 600; }
+.summary { flex: 1; font-family: var(--font-mono); }
+.chevron { font-size: 9px; opacity: 0.6; }
+
+.detail {
+  background: var(--color-bg);
+  padding: 8px 12px;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--color-fg-muted);
+  overflow-x: auto;
+  border-top: 1px solid var(--color-border-muted);
+  white-space: pre-wrap;
+}
+
+/* Color variants */
+.color-blue .dot { background: var(--color-blue); }
+.color-green .dot { background: var(--color-green); }
+.color-red .dot { background: var(--color-red); }
+.color-purple .dot { background: var(--color-purple); }
+.color-default .dot { background: var(--color-fg-muted); }

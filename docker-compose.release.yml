@@ -1,0 +1,200 @@
+# ===========================================================================
+# Briefapp V3 — Agentic Orchestration MVP (Release Environment)
+# Box 1: Sandbox Engine (runs within API via Docker Socket)
+# Box 2: Tansu Transactional Queue
+# Box 3: Circuit Breaker & Rate Limiting (Redis + Postgres)
+# Box 4: OpenClaw Message Gateway
+# ===========================================================================
+services:
+  # ── Core Infrastructure ──────────────────────────────────────────────────
+  postgres:
+    image: postgres:17-alpine
+    container_name: briefapp-postgres-rls
+    environment:
+      POSTGRES_DB: briefapp_todo_list
+      POSTGRES_USER: briefapp
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-briefapp-secret}
+    ports:
+      - "5432:5432"
+    volumes:
+      - briefapp-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U briefapp -d briefapp_todo_list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - briefapp-release-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: briefapp-redis-rls
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-briefapp-redis}
+    ports:
+      - "6379:6379"
+    volumes:
+      - briefapp-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-briefapp-redis}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - briefapp-release-net
+
+  tansu:
+    image: redpandadata/redpanda:latest
+    container_name: briefapp-tansu-rls
+    ports:
+      - "9600:9092"
+      - "9601:8081"
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --kafka-addr PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      - --advertise-kafka-addr PLAINTEXT://tansu:29092,OUTSIDE://localhost:9600
+    networks:
+      - briefapp-release-net
+
+  minio:
+    image: minio/minio:latest
+    container_name: briefapp-minio-rls
+    environment:
+      MINIO_ROOT_USER: briefapp
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD:-briefapp-secret}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - briefapp-minio-data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - briefapp-release-net
+
+  # ── Box 4: OpenClaude Gateway ──────────────────────────────────────────────
+  openclaude:
+    build:
+      context: ../openclaw
+      dockerfile: Dockerfile
+    container_name: briefapp-openclaude-rls
+    environment:
+      OPENCLAW_ADMIN_KEY: ${OPENCLAW_ADMIN_KEY:-rls-admin-key}
+      OPENCLAW_WEBHOOK_URL: http://api:8080/api/openclaw/webhook
+      OPENCLAW_WEBHOOK_SECRET: ${OPENCLAW_WEBHOOK_SECRET:-hmac-secret}
+      WHATSAPP_ENABLED: ${WHATSAPP_ENABLED:-false}
+      WHATSAPP_MODE: baileys
+      TELEGRAM_ENABLED: ${TELEGRAM_ENABLED:-false}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      SLACK_ENABLED: ${SLACK_ENABLED:-false}
+    ports:
+      - "9700:3000"
+    volumes:
+      - briefapp-openclaude-data:/data
+      - briefapp-openclaude-sessions:/sessions
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - briefapp-release-net
+
+  # ── Briefapp Core Services ────────────────────────────────────────────────
+  api:
+    build:
+      context: ./backend/AgenticTodoList.Api
+    container_name: briefapp-api-rls
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      tansu:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=briefapp_todo_list;Username=briefapp;Password=${DB_PASSWORD:-briefapp-secret}
+      ConnectionStrings__Redis: redis:6379,password=${REDIS_PASSWORD:-briefapp-redis}
+      Tansu__Host: http://tansu
+      Tansu__Port: 9600
+      OpenClaw__BaseUrl: http://openclaude:3000
+      OpenClaw__WebhookSecret: ${OPENCLAW_WEBHOOK_SECRET:-hmac-secret}
+      Auth__ApiKeys__0: ${PANDORA_API_KEY:-prod-api-key}
+      Sandbox__Enabled: true
+    ports:
+      - "8080:8080"
+    volumes:
+      # /var/run/docker.sock prevents Windows Docker Desktop limitations when using Sandbox Engine Box1
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - briefapp-release-net
+
+  context-box:
+    build:
+      context: ./backend/Briefapp.ContextBox
+    container_name: briefapp-context-box-rls
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: briefapp
+      MINIO_SECRET_KEY: ${MINIO_PASSWORD:-briefapp-secret}
+      MINIO_BUCKET: briefapp-context
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "8082:8000"
+    networks:
+      - briefapp-release-net
+
+  mcp:
+    build:
+      context: ./mcp-server-python
+    container_name: briefapp-mcp-rls
+    depends_on:
+      - api
+    environment:
+      PANDORA_API_BASE_URL: http://api:8080
+      PANDORA_API_TIMEOUT: 60
+      PANDORA_MCP_TRANSPORT: streamable-http
+      PANDORA_MCP_HOST: 0.0.0.0
+      PANDORA_MCP_PORT: 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - briefapp-release-net
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8080}
+    container_name: briefapp-frontend-rls
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+    networks:
+      - briefapp-release-net
+
+volumes:
+  briefapp-db-data:
+  briefapp-redis-data:
+  briefapp-tansu-data:
+  briefapp-minio-data:
+  briefapp-openclaude-data:
+  briefapp-openclaude-sessions:
+
+networks:
+  briefapp-release-net:
+    driver: bridge

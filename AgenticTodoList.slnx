@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/AgenticTodoList.Api.Tests/AgenticTodoList.Api.Tests.csproj" />
+    <Project Path="backend/AgenticTodoList.Api/AgenticTodoList.Api.csproj" />
+  </Folder>
+</Solution>
+

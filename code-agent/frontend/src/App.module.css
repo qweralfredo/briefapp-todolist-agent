@@ -1,0 +1,135 @@
+.loading {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--color-fg-muted);
+  font-size: var(--text-base);
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-blue);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  overflow: hidden;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  overflow: hidden;
+}
+
+.breadcrumbProject {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.breadcrumbSep {
+  color: var(--color-fg-subtle);
+}
+
+.breadcrumbSession {
+  color: var(--color-fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumbMuted {
+  font-size: var(--text-sm);
+  color: var(--color-fg-subtle);
+  font-style: italic;
+}
+
+.modelBadge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-fg-subtle);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-full);
+  padding: 1px 8px;
+}
+
+.headerSpacer { flex: 1; }
+
+.shortcutHint {
+  font-size: var(--text-xs);
+  color: var(--color-fg-subtle);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+}
+
+/* Workspace layout */
+.workspace {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Welcome screen */
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.welcomeIcon {
+  font-size: 48px;
+  color: var(--color-purple);
+  margin-bottom: var(--space-4);
+}
+
+.welcome h2 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.welcome p {
+  font-size: var(--text-base);
+  color: var(--color-fg-muted);
+  max-width: 400px;
+}
+
+.welcomeBtn {
+  margin-top: var(--space-4);
+  padding: 8px 20px;
+  background: var(--color-blue-muted);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.welcomeBtn:hover { background: #2979d9; }

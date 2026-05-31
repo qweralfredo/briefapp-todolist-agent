@@ -1,0 +1,112 @@
+services:
+  # ===========================================================================
+  # Briefapp V3 Box Architecture - Parallel Testing Environment (Port Range 55xx)
+  # ===========================================================================
+  
+  postgres:
+    image: postgres:17-alpine
+    container_name: briefapp-postgres-v3
+    environment:
+      POSTGRES_DB: briefapp_todo_list_v3
+      POSTGRES_USER: briefapp
+      POSTGRES_PASSWORD: briefapp
+    ports:
+      - "5532:5432"
+    volumes:
+      - ./ops/postgres/data_v3:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U briefapp -d briefapp_todo_list_v3"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - briefapp-net-v3
+
+  api:
+    build:
+      context: ./backend/AgenticTodoList.Api
+    container_name: briefapp-api-v3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=briefapp_todo_list_v3;Username=briefapp;Password=briefapp
+      Auth__ApiKeys__0: ${PANDORA_API_KEY:-dev-api-key-v3}
+    ports:
+      - "5580:8080"
+    networks:
+      - briefapp-net-v3
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:5580
+    container_name: briefapp-frontend-v3
+    depends_on:
+      - api
+    ports:
+      - "5500:80"
+    networks:
+      - briefapp-net-v3
+
+  mcp:
+    build:
+      context: ./mcp-server-python
+    container_name: briefapp-mcp-v3
+    depends_on:
+      - api
+    environment:
+      PANDORA_API_BASE_URL: http://api:8080
+      PANDORA_API_TIMEOUT: 30
+      PANDORA_MCP_TRANSPORT: streamable-http
+      PANDORA_MCP_HOST: 0.0.0.0
+      PANDORA_MCP_PORT: 8000
+    ports:
+      - "5581:8000"
+    networks:
+      - briefapp-net-v3
+
+  minio:
+    image: minio/minio:latest
+    container_name: briefapp-minio-v3
+    environment:
+      MINIO_ROOT_USER: briefapp
+      MINIO_ROOT_PASSWORD: briefapp-secret
+    ports:
+      - "5590:9000"
+      - "5501:9001"
+    volumes:
+      - ./ops/minio/data_v3:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - briefapp-net-v3
+
+  context-box:
+    build:
+      context: ./backend/Briefapp.ContextBox
+    container_name: briefapp-context-box-v3
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: briefapp
+      MINIO_SECRET_KEY: briefapp-secret
+      MINIO_BUCKET: briefapp-context-v3
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "5582:8000"
+    networks:
+      - briefapp-net-v3
+
+networks:
+  briefapp-net-v3:
+    name: briefapp-net-v3
+    driver: bridge

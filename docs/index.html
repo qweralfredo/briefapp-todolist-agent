@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briefapp Todo List — Agentic Task System</title>
+  <meta name="description"
+    content="An open-source Agentic Task System that lets you orchestrate a cluster of AI coding agents inside a single project using MCP, Scrum and persistent knowledge." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- AUTHOR BAR -->
+  <div class="author-bar">
+    Made by <a href="https://www.linkedin.com/in/alfredo-rosa/" target="_blank" rel="noopener">Alfredo Rosa</a>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        Briefapp
+      </div>
+      <ul class="nav-links">
+        <li><a href="#what">What is it</a></li>
+        <li><a href="#why">Why Agentic</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#mcp">MCP Tools</a></li>
+        <li><a href="#install">Install</a></li>
+        <li>
+          <a href="https://github.com/qweralfredo/todolist" class="btn-nav" target="_blank" rel="noopener">
+            GitHub <span>&#8599;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span> Open Source &middot; MCP-Native &middot; Agentic-First &middot; 100% Local &middot; V3
+        Box Architecture
+      </div>
+      <h1 class="hero-title">
+        Orchestrate a
+        <span class="gradient-text">cluster of AI agents</span>
+        inside a single project
+      </h1>
+      <p class="hero-sub">
+        <strong>Briefapp Todo List V3</strong> is an open-source Agentic Task System built on the
+        <strong>Model Context Protocol (MCP)</strong>. It gives every AI coding agent — GitHub Copilot,
+        Claude, Cursor, Windsurf, and others — a shared, persistent operational context: backlog, sprints,
+        work items, wiki, knowledge checkpoints, <strong>semantic RAG search</strong>, and <strong>sandboxed code
+          execution</strong>.
+        <br /><br />
+        Everything runs <strong>100% locally</strong> on your machine — no cloud account, no SaaS,
+        no data leaving your environment. One <code>docker compose up -d</code> and the full stack
+        is live: API, frontend, MCP server, PostgreSQL, and 60+ MCP tools.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/qweralfredo/todolist" class="btn-primary" target="_blank" rel="noopener">
+          Get Started on GitHub
+        </a>
+        <a href="#how" class="btn-ghost">See how it works &#8595;</a>
+      </div>
+      <div class="hero-terminal">
+        <div class="terminal-bar">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="terminal-title">install &amp; run</span>
+        </div>
+        <pre class="terminal-body"><span class="c-comment"># 1. Clone and start the whole stack</span>
+<span class="c-cmd">git clone</span> https://github.com/qweralfredo/todolist
+<span class="c-cmd">docker compose up -d</span>
+
+<span class="c-comment"># 2. Install Briefapp (Windows — protocol, context menu, extensions)</span>
+<span class="c-cmd">powershell</span> -ExecutionPolicy Bypass -File .\installers\install-briefapp.ps1
+
+<span class="c-comment"># 3. Ask your agent — it now has 60+ tools and full project context</span>
+<span class="c-prompt">@workspace</span> Create a sprint for the authentication epic</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS IT -->
+  <section class="section section-alt" id="what">
+    <div class="container">
+      <div class="section-label">The Project</div>
+      <h2 class="section-title">One system that every agent shares</h2>
+      <p class="section-desc">
+        Traditional task trackers are for humans. Briefapp is designed from the ground up to be
+        <em>read and written</em> by AI agents — through a standard, open protocol — while humans
+        keep full visibility via a React dashboard.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">&#127981;</div>
+          <h3>Full Scrum Engine</h3>
+          <p>Projects, backlog items with story points and priorities, sprints, work items, and
+            sprint reviews — the complete Scrum lifecycle for a team of agents.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#129504;</div>
+          <h3>Briefapp Knowledge Hub</h3>
+          <p>Wiki pages, knowledge checkpoints (context snapshot, decisions, risks, next actions),
+            and agentic run logs with token tracking so agents never lose context between sessions.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128279;</div>
+          <h3>MCP-Native Protocol</h3>
+          <p>A Python MCP server built with the official FastMCP SDK exposes every operation as
+            an MCP tool — plug it into any agent IDE in minutes.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128202;</div>
+          <h3>Real-time Dashboard</h3>
+          <p>React 19 + MUI frontend lets humans monitor sprint boards, agent activity, and
+            knowledge artifacts side-by-side with the ai agents working the tasks.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#9874;</div>
+          <h3>Production-Ready Ops</h3>
+          <p>Docker Compose with PostgreSQL persistence, host-disk backups, and PowerShell
+            backup/restore scripts — ready for real teams.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128269;</div>
+          <h3>Context-Box RAG (V3)</h3>
+          <p>Semantic search over ingested documents. Right-click a file in Explorer or Finder,
+            send it to Briefapp, and agents can query it instantly via <code>context_box_query</code>.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128230;</div>
+          <h3>Sandboxed Execution (V3)</h3>
+          <p>Isolated Docker containers per box with CPU/RAM/network controls. Agents create,
+            execute commands, and destroy sandboxes — all via MCP tools.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128187;</div>
+          <h3>Multi-IDE Support</h3>
+          <p>Works with VS Code, Cursor, Windsurf, Claude Desktop, and Antigravity. Skills
+            and MCP configs ready for each IDE out of the box.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY AGENTIC -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title">Why a <span class="gradient-text">dedicated agentic</span> system?</h2>
+      <div class="two-col">
+        <div class="two-col-text">
+          <p>
+            When you use multiple AI coding agents on the same project — say, GitHub Copilot for
+            implementation, Claude for architecture reviews, and a custom agent for testing — each
+            one starts without context from the others. They re-discover the same decisions, repeat
+            the same analysis, and can even contradict each other.
+          </p>
+          <p>
+            Briefapp solves this with a <strong>shared operational memory</strong>: a persistent,
+            structured store that all agents can read from and write to through a standard protocol.
+            Every sprint decision, every backlog priority, every architecture risk gets recorded and
+            becomes immediately available to any agent that joins the project.
+          </p>
+          <p>
+            The result is a <strong>cluster of agents that behaves like a coordinated team</strong>
+            — each one picks up where the last left off, speaks the same task language, and
+            never wastes tokens re-establishing context.
+          </p>
+        </div>
+        <div class="comparison">
+          <div class="comp-col comp-before">
+            <div class="comp-header">&#10007; Without Briefapp</div>
+            <ul>
+              <li>Each agent starts cold</li>
+              <li>Context lives only in chat history</li>
+              <li>Decisions are re-made every session</li>
+              <li>Agents duplicate or contradict work</li>
+              <li>No audit trail of agentic actions</li>
+              <li>Human must bridge every context gap</li>
+            </ul>
+          </div>
+          <div class="comp-col comp-after">
+            <div class="comp-header">&#10003; With Briefapp</div>
+            <ul>
+              <li>Every agent shares the same backlog</li>
+              <li>Context persisted in PostgreSQL</li>
+              <li>Checkpoints capture decisions &amp; risks</li>
+              <li>Agents hand off work via work items</li>
+              <li>Token-tracked run log per agent</li>
+              <li>Humans monitor, agents execute</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section-alt" id="how">
+    <div class="container">
+      <div class="section-label">Architecture</div>
+      <h2 class="section-title">How the agentic cluster works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Agent connects via MCP</h3>
+            <p>Any agent IDE (VS Code Copilot, Cursor, Claude Desktop…) adds Briefapp's MCP server
+              as a tool provider. The server runs in Docker at <code>http://127.0.0.1:8481/mcp</code>
+              and exposes all operations as typed MCP tools.</p>
+          </div>
+        </div>
+        <div class="step-arrow">&#8595;</div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Agent reads project context</h3>
+            <p>Before coding, agents call <code>project_list</code>, <code>backlog_list</code>, and read
+              <code>briefapp://projects/{id}/context</code> — an MCP resource that returns the full
+              sprint state, open work items, wiki, and last checkpoint in a single call.
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">&#8595;</div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Agent works tasks, updates status</h3>
+            <p>While implementing, agents call <code>workitem_update</code> to mark items
+              InProgress → Done, logging the model name, IDE, tokens used, and a feedback
+              summary. The next agent can instantly see what was done and why.</p>
+          </div>
+        </div>
+        <div class="step-arrow">&#8595;</div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h3>Agent saves knowledge checkpoints</h3>
+            <p>At key milestones agents call <code>knowledge_checkpoint</code> with a context
+              snapshot, key decisions, identified risks, and suggested next actions. Future
+              agents (or the same one on a new session) load these checkpoints to resume
+              without context loss.</p>
+          </div>
+        </div>
+        <div class="step-arrow">&#8595;</div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <h3>Human reviews on the dashboard</h3>
+            <p>The React frontend shows the sprint board, agent run history, wiki pages, and
+              all checkpoints in real time. Humans can adjust priorities, reject work items,
+              or add new backlog items — and agents pick those changes up on the next session.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="section" id="diagram">
+    <div class="container">
+      <div class="section-label">Cluster Diagram</div>
+      <h2 class="section-title">One backend, many agents</h2>
+      <div class="diagram">
+        <div class="diag-agents">
+          <div class="diag-agent">
+            <div class="diag-agent-icon">&#129303;</div>
+            <span>GitHub Copilot</span>
+          </div>
+          <div class="diag-agent">
+            <div class="diag-agent-icon">&#128736;</div>
+            <span>Claude / Cursor</span>
+          </div>
+          <div class="diag-agent">
+            <div class="diag-agent-icon">&#128296;</div>
+            <span>Custom Agent</span>
+          </div>
+        </div>
+        <div class="diag-arrow-down">&#8595; MCP Protocol (HTTP SSE / stdio)</div>
+        <div class="diag-mcp">
+          <div class="diag-box diag-box-mcp">
+            <strong>MCP Server</strong><br />Python FastMCP<br /><code>:8481</code>
+          </div>
+        </div>
+        <div class="diag-arrow-down">&#8595; REST API calls</div>
+        <div class="diag-api">
+          <div class="diag-box diag-box-api">
+            <strong>.NET 10 REST API</strong><br />ASP.NET Core / EF Core<br /><code>:8480</code>
+          </div>
+          <div class="diag-box diag-box-db">
+            <strong>PostgreSQL 16</strong><br />Persistent &amp; Backed Up<br /><code>:5432</code>
+          </div>
+        </div>
+        <div class="diag-arrow-down">&#8595; React Dashboard</div>
+        <div class="diag-human">
+          <div class="diag-box diag-box-human">
+            <strong>Human Dashboard</strong><br />React 19 + MUI<br /><code>:8400</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section section-alt" id="stack">
+    <div class="container">
+      <div class="section-label">Technology</div>
+      <h2 class="section-title">The stack</h2>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="stack-logo stack-dotnet">&#128203;</div>
+          <div class="stack-info">
+            <strong>.NET 10</strong>
+            <span>ASP.NET Core Web API, EF Core, PostgreSQL — the backbone REST API</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-logo stack-react">&#9883;</div>
+          <div class="stack-info">
+            <strong>React 19 + TypeScript</strong>
+            <span>Vite + MUI dashboard — real-time sprint board and agent activity feed</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-logo stack-python">&#128013;</div>
+          <div class="stack-info">
+            <strong>Python FastMCP</strong>
+            <span>Official MCP SDK — bridges IDE agents to the REST API with typed tools</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-logo stack-pg">&#128451;</div>
+          <div class="stack-info">
+            <strong>PostgreSQL 16</strong>
+            <span>Persistent, real-integration-tested — the single source of truth for all agents</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-logo stack-docker">&#128679;</div>
+          <div class="stack-info">
+            <strong>Docker Compose</strong>
+            <span>One command to run the full stack: API, frontend, MCP server, database</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-logo stack-mcp">&#128279;</div>
+          <div class="stack-info">
+            <strong>Model Context Protocol</strong>
+            <span>Open standard by Anthropic — any compliant AI tool can integrate in minutes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MCP TOOLS -->
+  <section class="section" id="mcp">
+    <div class="container">
+      <div class="section-label">MCP Tools</div>
+      <h2 class="section-title">What agents can do</h2>
+      <p class="section-desc">
+        Every operation exposed via MCP is a first-class tool that any compliant agent can call.
+        Here are the key tools Briefapp exposes:
+      </p>
+      <div class="tools-grid">
+        <div class="tool-group">
+          <div class="tool-group-title">&#128194; Projects &amp; Backlog</div>
+          <div class="tool"><code>project_list</code> <span>List all projects</span></div>
+          <div class="tool"><code>project_create</code> <span>Create a new project</span></div>
+          <div class="tool"><code>backlog_add</code> <span>Add a backlog item with priority &amp; story points</span>
+          </div>
+          <div class="tool"><code>backlog_list</code> <span>List all backlog items</span></div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#127939; Sprints &amp; Work Items</div>
+          <div class="tool"><code>sprint_create</code> <span>Create a sprint from selected backlog items</span></div>
+          <div class="tool"><code>workitem_list</code> <span>List work items with statuses</span></div>
+          <div class="tool"><code>workitem_update</code> <span>Update status, log model, IDE &amp; tokens used</span>
+          </div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#129504; Knowledge &amp; Context</div>
+          <div class="tool"><code>knowledge_checkpoint</code> <span>Save context snapshot, decisions, risks</span></div>
+          <div class="tool"><code>documentation_add</code> <span>Add a documentation page</span></div>
+          <div class="tool"><code>wiki_add</code> <span>Add a wiki page to the project</span></div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#128269; Context-Box RAG (V3)</div>
+          <div class="tool"><code>context_box_ingest</code> <span>Ingest file into RAG system</span></div>
+          <div class="tool"><code>context_box_query</code> <span>Semantic search over documents</span></div>
+          <div class="tool"><code>context_box_ingest_batch</code> <span>Batch ingest multiple files</span></div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#128230; Sandboxes (V3)</div>
+          <div class="tool"><code>sandbox_create</code> <span>Create isolated Docker container</span></div>
+          <div class="tool"><code>sandbox_exec</code> <span>Execute commands in sandbox</span></div>
+          <div class="tool"><code>sandbox_workspace_prepare</code> <span>Clone git repo into sandbox</span></div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#128203; Queue &amp; DLQ (V3)</div>
+          <div class="tool"><code>task_publish</code> <span>Publish task to box queue</span></div>
+          <div class="tool"><code>dlq_list</code> <span>List dead letter entries</span></div>
+          <div class="tool"><code>queue_dashboard</code> <span>Live queue metrics</span></div>
+        </div>
+        <div class="tool-group">
+          <div class="tool-group-title">&#128202; MCP Resources</div>
+          <div class="tool"><code>briefapp://projects/{id}/context</code> <span>Full project state in one call</span>
+          </div>
+          <div class="tool"><code>briefapp://projects/{id}/backlog</code> <span>Current backlog</span></div>
+          <div class="tool"><code>briefapp://projects/{id}/knowledge</code> <span>Wiki + checkpoints</span></div>
+          <div class="tool"><code>briefapp://projects/{id}/tasks/triage</code> <span>Prioritized task triage view</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="section section-alt" id="install">
+    <div class="container">
+      <div class="section-label">Installation</div>
+      <h2 class="section-title">Works with every AI IDE</h2>
+      <p class="section-desc">
+        Briefapp supports VS Code, Cursor, Windsurf, Claude Desktop, and Antigravity with dedicated
+        skills and MCP configurations. One installer sets up everything.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">&#128187;</div>
+          <h3>Windows</h3>
+          <p><code>powershell -ExecutionPolicy Bypass -File .\installers\install-briefapp.ps1</code></p>
+          <p>Registers <code>briefapp://</code> protocol, context menus, creates <code>C:\briefapp</code>,
+            and packages extensions.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#127822;</div>
+          <h3>macOS</h3>
+          <p><code>sudo ./installers/install-briefapp.sh</code></p>
+          <p>Creates <code>/briefapp</code>, registers Automator Quick Action for Finder context menu,
+            and packages extensions.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128279;</div>
+          <h3>MCP per IDE</h3>
+          <p>Copy the MCP config to your IDE's config directory. Skills available for Cursor
+            (<code>.mdc</code>), Windsurf (<code>.md</code>), and VS Code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-glow"></div>
+    <div class="container cta-inner">
+      <h2>Ready to orchestrate your agent cluster?</h2>
+      <p>
+        Clone the repo, run <code>docker compose up -d</code>, run the installer, and
+        your first agent is connected in under five minutes — on any IDE.
+      </p>
+      <div class="cta-actions">
+        <a href="https://github.com/qweralfredo/todolist" class="btn-primary" target="_blank" rel="noopener">
+          &#128640; Clone on GitHub
+        </a>
+        <a href="https://github.com/qweralfredo/todolist/blob/main/README.md" class="btn-ghost-light" target="_blank"
+          rel="noopener">
+          Read the Docs
+        </a>
+      </div>
+      <div class="cta-badges">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" />
+        <img src="https://img.shields.io/badge/MCP-Python%20FastMCP-3776AB" alt="MCP" />
+        <img src="https://img.shields.io/badge/.NET-10-512BD4" alt=".NET" />
+        <img src="https://img.shields.io/badge/React-19-61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/V3-Box%20Architecture-brightgreen" alt="V3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        Briefapp Todo List
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/qweralfredo/todolist" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/qweralfredo/todolist/blob/main/README.md" target="_blank" rel="noopener">Docs</a>
+        <a href="https://github.com/qweralfredo/todolist/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+        <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP Spec</a>
+      </div>
+      <div class="footer-copy">
+        Apache 2.0 &mdash; Built with &#9829; for agentic developers
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 20);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.card, .step, .stack-item, .tool-group').forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+  </script>
+</body>
+
+</html>

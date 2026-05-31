@@ -1,0 +1,181 @@
+services:
+  # ===========================================================================
+  # Briefapp Core Stack (sempre inicializado)
+  # ===========================================================================
+  postgres:
+    image: postgres:17-alpine
+    container_name: briefapp-postgres
+    environment:
+      POSTGRES_DB: briefapp_todo_list
+      POSTGRES_USER: briefapp
+      POSTGRES_PASSWORD: briefapp
+    ports:
+      - "8432:5432"
+    volumes:
+      - ./ops/postgres/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U briefapp -d briefapp_todo_list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - briefapp-net
+
+  api:
+    build:
+      context: ./backend/AgenticTodoList.Api
+    container_name: briefapp-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=briefapp_todo_list;Username=briefapp;Password=briefapp
+      Auth__ApiKeys__0: ${PANDORA_API_KEY:-dev-api-key}
+      MODE: ${MODE:-prod}
+    ports:
+      - "8480:8080"
+    networks:
+      - briefapp-net
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ""
+    container_name: briefapp-frontend
+    depends_on:
+      - api
+      - context-box
+    ports:
+      - "8400:80"
+    networks:
+      - briefapp-net
+
+  postgres-backup:
+    image: postgres:17-alpine
+    container_name: briefapp-postgres-backup
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: briefapp_todo_list
+      PGUSER: briefapp
+      PGPASSWORD: briefapp
+      BACKUP_DIR: /backups
+      KEEP_DAYS: ${BACKUP_KEEP_DAYS:-7}
+    volumes:
+      - ./ops/postgres/backups:/backups
+    entrypoint: >
+      sh -c "
+        mkdir -p /backups &&
+        echo '*/30 * * * * pg_dump -Fc -f /backups/briefapp-\$$(date +%Y%m%d-%H%M%S).dump && find /backups -name \"*.dump\" -mtime +$$KEEP_DAYS -delete && echo \"Backup OK \$$(date)\"' > /etc/crontabs/root &&
+        crond -f -l 6
+      "
+    restart: unless-stopped
+    networks:
+      - briefapp-net
+
+  mcp:
+    build:
+      context: ./mcp-server-python
+    container_name: briefapp-mcp
+    depends_on:
+      - api
+    environment:
+      PANDORA_API_BASE_URL: http://api:8080
+      PANDORA_API_TIMEOUT: 30
+      PANDORA_MCP_TRANSPORT: dual
+      PANDORA_MCP_HOST: 0.0.0.0
+      PANDORA_MCP_PORT: 8000
+      PANDORA_MCP_MOUNT_PATH: /
+      PANDORA_CONTEXT_API_BASE_URL: http://context-box:8000/api/context
+      PANDORA_API_KEY: ${PANDORA_API_KEY:-dev-api-key}
+    ports:
+      - "8481:8000"
+    networks:
+      - briefapp-net
+
+  agent-planner:
+    build:
+      context: ./mcp-server-python
+    container_name: briefapp-agent-planner
+    depends_on:
+      - api
+      - mcp
+    env_file:
+      - .env
+    environment:
+      PANDORA_API_BASE_URL: http://api:8080
+    command: ["python", "agent_planner.py"]
+    ports:
+      - "8483:8483"
+    networks:
+      - briefapp-net
+
+  # ===========================================================================
+  # Context-Box RAG Stack (v3 Box Architecture)
+  # ===========================================================================
+  minio:
+    image: minio/minio:latest
+    container_name: briefapp-minio
+    environment:
+      MINIO_ROOT_USER: briefapp
+      MINIO_ROOT_PASSWORD: briefapp-secret
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+    volumes:
+      - ./ops/minio/data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - briefapp-net
+
+  context-box:
+    build:
+      context: ./backend/Briefapp.ContextBox
+    container_name: briefapp-context-box
+    depends_on:
+      minio:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: briefapp
+      MINIO_SECRET_KEY: briefapp-secret
+      MINIO_BUCKET: briefapp-context
+    ports:
+      - "8482:8000"
+    networks:
+      - briefapp-net
+
+
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: briefapp-jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - briefapp-net
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  briefapp-net:
+    name: briefapp-net
+    driver: bridge
+

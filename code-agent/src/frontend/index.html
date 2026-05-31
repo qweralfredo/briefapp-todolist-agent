@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">CA</span>
+          <div>
+            <h1>Code Agent</h1>
+            <p>Local coding sessions over Ollama</p>
+          </div>
+        </div>
+        <button id="new-session" class="primary-button">New Session</button>
+        <div class="sidebar-section">
+          <div class="section-label">Sessions</div>
+          <div id="session-list" class="session-list"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="section-label">Workspace</div>
+          <div id="workspace-summary" class="workspace-summary"></div>
+        </div>
+      </aside>
+
+      <main class="main-pane">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Isolated runtime</p>
+            <h2 id="session-title">No session selected</h2>
+            <p id="session-meta" class="muted">Create a session to start coding inside the sandbox workspace.</p>
+          </div>
+          <div class="hero-controls">
+            <label>
+              Model
+              <select id="model-select"></select>
+            </label>
+          </div>
+        </header>
+
+        <section class="grid">
+          <section class="card conversation-card">
+            <div class="card-header">
+              <h3>Conversation</h3>
+              <span class="card-meta">Prompt, planning and agent reply</span>
+            </div>
+            <div id="conversation" class="conversation"></div>
+            <form id="composer" class="composer">
+              <textarea id="prompt-input" placeholder="Ask the agent to inspect, plan, edit or verify work inside the sandbox workspace."></textarea>
+              <div class="composer-footer">
+                <div id="skill-pills" class="skill-pills"></div>
+                <button type="submit" class="primary-button">Send Prompt</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h3>Plan</h3>
+              <span class="card-meta">Operational steps</span>
+            </div>
+            <ol id="plan-list" class="plan-list"></ol>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h3>Files</h3>
+              <span class="card-meta">Touched by the session</span>
+            </div>
+            <ul id="files-list" class="simple-list"></ul>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h3>Commands</h3>
+              <span class="card-meta">Sandbox execution log</span>
+            </div>
+            <ul id="commands-list" class="simple-list commands-list"></ul>
+          </section>
+
+          <section class="card span-2">
+            <div class="card-header">
+              <h3>Skills</h3>
+              <span class="card-meta">Explicit context injection</span>
+            </div>
+            <div id="skills-grid" class="skills-grid"></div>
+          </section>
+
+          <section class="card span-2">
+            <div class="card-header">
+              <h3>Live Feed</h3>
+              <span class="card-meta">Streaming events</span>
+            </div>
+            <div id="events-feed" class="events-feed"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+  </html>
