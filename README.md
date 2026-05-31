@@ -10,10 +10,7 @@
 > Uma plataforma de design com IA idealizada por **Ana Rovina** e **Alfredo Rosa**. 
 > Focada em entregar **seu produto digital com excelência e resultado real**, projetada para founders e empreendedores que têm a ideia mas precisam do produto com rapidez e segurança, sem meses de desenvolvimento ou custos imprevisíveis.
 > 
-> 🎨 **Identidade Visual (Design System):**
-> - **Cores Primárias (Studio Rose):** Brand/Rose (`#E9506E`), Hover (`#D63455`), Dark (`#5C0A1A`)
-> - **Cores Neutras (Studio Ink):** Background/Light (`#F8FAFC`), Text/Dark (`#111318`)
-> - **Tipografia Oficial:** `Plus Jakarta Sans`, system-ui, sans-serif
+
 > - **Website:** [brief.app.br](https://brief.app.br/)
 
 Um **Sistema de Tarefas Orientado a Agentes** de código aberto e full-stack, desenvolvido para a **colaboração entre humanos e IA**. Construído em torno do [Model Context Protocol (MCP)](https://modelcontextprotocol.io), integra-se nativamente a ambientes de agentes como o VS Code Copilot, permitindo que agentes de IA criem sprints, gerenciem o backlog e acompanhem itens de trabalho — tudo em tempo real.
