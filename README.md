@@ -5,6 +5,17 @@
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](backend/AgenticTodoList.Api)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](frontend)
 
+> **brief.app — Design com inteligência**
+> 
+> Uma plataforma de design com IA idealizada por **Ana Rovina** e **Alfredo Rosa**. 
+> Focada em entregar **seu produto digital com excelência e resultado real**, projetada para founders e empreendedores que têm a ideia mas precisam do produto com rapidez e segurança, sem meses de desenvolvimento ou custos imprevisíveis.
+> 
+> 🎨 **Identidade Visual (Design System):**
+> - **Cores Primárias (Studio Rose):** Brand/Rose (`#E9506E`), Hover (`#D63455`), Dark (`#5C0A1A`)
+> - **Cores Neutras (Studio Ink):** Background/Light (`#F8FAFC`), Text/Dark (`#111318`)
+> - **Tipografia Oficial:** `Plus Jakarta Sans`, system-ui, sans-serif
+> - **Website:** [brief.app.br](https://brief.app.br/)
+
 An open-source, full-stack **Agentic Task System** designed for **human + AI collaboration**. Built around the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), it integrates natively with agentic environments such as VS Code Copilot, enabling AI agents to create sprints, manage backlogs, and track work items — all in real time.
 
 - **Backend:** .NET 10 Web API with PostgreSQL (EF Core)
