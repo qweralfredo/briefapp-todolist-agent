@@ -513,7 +513,7 @@ O servidor briefapp expõe **dois endpoints simultâneos**:
 - `POST /mcp` → **Streamable HTTP** (SDK v1.27+, protocolo moderno) ← **padrão atual**
 - `GET /sse` + `POST /messages/` → SSE legado (mantido para compatibilidade)
 
-O **proxy Node.js** (`C:/briefapp/briefapp-mcp-proxy.mjs`) faz a ponte `stdio ↔ Streamable HTTP` e é iniciado automaticamente pelo Gemini CLI via `command`.
+O **proxy Node.js** (`./install/proxy/pandora-mcp-proxy.mjs`) faz a ponte `stdio ↔ Streamable HTTP` e é iniciado automaticamente pelo Gemini CLI via `command`.
 
 > ✅ **Use sempre o proxy (command-based)**. Não use `type: "sse"` + URL direta.
 
@@ -524,7 +524,7 @@ O `settings.json` correto para o Gemini CLI:
   "mcpServers": {
     "briefapp-todo-list-mcp": {
       "command": "node",
-      "args": ["C:/briefapp/briefapp-mcp-proxy.mjs"],
+      "args": ["./install/proxy/pandora-mcp-proxy.mjs"],
       "env": {
         "BRIEFAPP_API_KEY": "pbx_c3bfdcc755b695668000b47524e7de24ae9d46e0d266dadb",
         "MCP_ENDPOINT": "http://localhost:8481/mcp"

@@ -105,14 +105,14 @@ Open `.env` and configure the following parameters:
 #### Step 2: Configure `.gemini/settings.json` for AI Agents
 To allow AI agents (such as VS Code Copilot, Gemini CLI, or custom subagents) to interact with your workspace, you must register the Briefapp MCP server.
 
-Create a `.gemini/settings.json` file in your workspace root (e.g., `C:/projetos/briefapp/.gemini/settings.json`) with the following JSON content:
+Create a `.gemini/settings.json` file in your workspace root (e.g., `./.gemini/settings.json`) with the following JSON content:
 
 ```json
 {
   "mcpServers": {
     "briefapp-todo-list-mcp": {
       "command": "node",
-      "args": ["C:/projetos/briefapp/briefapp-todolist/install/proxy/pandora-mcp-proxy.mjs"],
+      "args": ["./install/proxy/pandora-mcp-proxy.mjs"],
       "env": {
         "BRIEFAPP_API_KEY": "pbx_your-secure-production-api-key",
         "MCP_ENDPOINT": "http://localhost:8481/mcp"

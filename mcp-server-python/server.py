@@ -495,7 +495,7 @@ def workitem_update(
     if not responsavel_id:
         try:
             import json
-            conf_path = "C:/projetos/briefapp/briefapp.conf"
+            conf_path = os.path.join(os.path.dirname(__file__), "briefapp.conf")
             if os.path.exists(conf_path):
                 with open(conf_path, "r", encoding="utf-8") as f:
                     conf = json.load(f)
