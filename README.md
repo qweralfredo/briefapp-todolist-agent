@@ -1,4 +1,4 @@
-# Briefapp Todo List — Agentic Task System
+# Briefapp Todo List — Sistema de Tarefas Orientado a Agentes
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![MCP Python Server](https://img.shields.io/badge/MCP-Python%20FastMCP-3776AB?style=for-the-badge&logo=python&logoColor=white)](mcp-server-python/README.md)
@@ -16,49 +16,49 @@
 > - **Tipografia Oficial:** `Plus Jakarta Sans`, system-ui, sans-serif
 > - **Website:** [brief.app.br](https://brief.app.br/)
 
-An open-source, full-stack **Agentic Task System** designed for **human + AI collaboration**. Built around the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), it integrates natively with agentic environments such as VS Code Copilot, enabling AI agents to create sprints, manage backlogs, and track work items — all in real time.
+Um **Sistema de Tarefas Orientado a Agentes** de código aberto e full-stack, desenvolvido para a **colaboração entre humanos e IA**. Construído em torno do [Model Context Protocol (MCP)](https://modelcontextprotocol.io), integra-se nativamente a ambientes de agentes como o VS Code Copilot, permitindo que agentes de IA criem sprints, gerenciem o backlog e acompanhem itens de trabalho — tudo em tempo real.
 
-- **Backend:** .NET 10 Web API with PostgreSQL (EF Core)
+- **Backend:** .NET 10 Web API com PostgreSQL (EF Core)
 - **Frontend:** React 19 + TypeScript (Vite + MUI)
-- **Agentic protocol:** Python MCP server (official FastMCP SDK) for integration with agentic apps and VS Code
-- **Methodology:** Full Scrum structure — projects, backlog, sprints, tasks, reviews
-- **Knowledge hub:** wiki pages, context checkpoints, agentic run history
-- **Operations:** Docker Compose with local disk persistence and backup scripts
+- **Protocolo de agentes:** Servidor MCP em Python (FastMCP SDK oficial) para integração com aplicativos de IA e VS Code
+- **Metodologia:** Estrutura Scrum completa — projetos, backlog, sprints, tarefas e revisões
+- **Hub de Conhecimento:** páginas de wiki, checkpoints de contexto e histórico de execução de agentes
+- **Operações:** Docker Compose com persistência em disco local e scripts de backup
 
 ---
 
-## Quick Start
+## Início Rápido
 
-### Install MCP in VS Code (one command — Windows)
+### Instalar o MCP no VS Code (um comando — Windows)
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\ops\scripts\install-briefapp-mcp-vscode.ps1
 ```
 
-To automatically open the VS Code install deep link:
+Para abrir o link de instalação profunda do VS Code automaticamente:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\ops\scripts\install-briefapp-mcp-vscode.ps1 -OpenInstallLink
 ```
 
-### Run with Docker
+### Executar com Docker
 
 ```bash
 docker compose up -d --build
 ```
 
-Host ports:
+Portas do host:
 
-| Service    | Port  |
+| Serviço    | Porta |
 |------------|-------|
 | Frontend   | 8400  |
 | API        | 8480  |
-| MCP Server | 8481  |
+| Servidor MCP| 8481  |
 | PostgreSQL | 8432  |
 
-### Run without Docker
+### Executar sem Docker
 
-1. Start a local PostgreSQL instance on port `5432`:
+1. Inicie uma instância local do PostgreSQL na porta `5432`:
    - database: `briefapp_todo_list`
    - user: `Briefapp`
    - password: `Briefapp`
@@ -78,45 +78,45 @@ Host ports:
 
 ---
 
-## Environment Setup & API Keys Configuration
+## Configuração de Ambiente e Chaves de API
 
-Briefapp operates in two distinct modes configured via environment variables: **Development Mode** (enables fast, bypassed local testing) and **Production Mode** (enables full role-based access control and security).
+O Briefapp opera em dois modos distintos configurados via variáveis de ambiente: **Modo de Desenvolvimento** (permite testes locais rápidos e sem barreiras) e **Modo de Produção** (habilita controle de acesso completo baseado em funções e segurança).
 
-### 1. Development Mode (Bypassed Authentication)
-In Development Mode, the login screen is bypassed, no credentials or tokens are required, and the API key checks for the backend, frontend, and Python MCP server are deactivated.
+### 1. Modo de Desenvolvimento (Autenticação Ignorada)
+No Modo de Desenvolvimento, a tela de login é ignorada, nenhuma credencial ou token é necessário e as validações de chaves de API para o backend, frontend e servidor MCP Python são desativadas.
 
-To activate Development Mode:
-1. In the root directory, create a `.env` file containing:
+Para ativar o Modo de Desenvolvimento:
+1. No diretório raiz, crie um arquivo `.env` contendo:
    ```env
    MODE=dev
    VITE_MODE=dev
-   GEMINI_API_KEY=your-optional-gemini-key
+   GEMINI_API_KEY=sua-chave-gemini-opcional
    ```
-2. Run the stack with:
+2. Execute a stack com:
    ```bash
    docker compose up -d --build
    ```
-3. Open `http://localhost:8400` in your browser. You will be automatically logged in as a Developer, and all systems (including the planner and MCP) will connect without requiring a master API key.
+3. Abra `http://localhost:8400` no seu navegador. Você será logado automaticamente como Desenvolvedor e todos os sistemas (incluindo o planejador e o MCP) se conectarão sem a necessidade de uma chave de API mestra.
 
 ---
 
-### 2. Production Mode (Secure Authentication)
-In Production Mode, all actions are protected by Firebase Google Auth on the frontend, and API key token validation (`pbx_...` prefix) on the REST API and Python MCP server.
+### 2. Modo de Produção (Autenticação Segura)
+No Modo de Produção, todas as ações são protegidas pelo Firebase Google Auth no frontend e pela validação de tokens (`pbx_...`) na REST API e no servidor MCP em Python.
 
-#### Step 1: Configure `.env` variables
-Copy the `.env.release.example` file to `.env` in the root folder:
+#### Passo 1: Configurar variáveis no `.env`
+Copie o arquivo `.env.release.example` para `.env` na pasta raiz:
 ```bash
 cp .env.release.example .env
 ```
-Open `.env` and configure the following parameters:
-- **`GEMINI_API_KEY`**: Your Google Gemini API token, required by the Agent Planner to suggest plans and structure backlog decomposition.
-- **`PANDORA_API_KEY`**: Set a secure random key beginning with `pbx_` (e.g. `pbx_yourrandomalphanumerickey`). This is the master token used to authenticate calls between the MCP proxy server and the backend API.
-- **`DB_PASSWORD` / `REDIS_PASSWORD` / `MINIO_PASSWORD`**: Set secure passwords for the Postgres database, Redis cache, and Minio object store.
+Abra o `.env` e configure os seguintes parâmetros:
+- **`GEMINI_API_KEY`**: Seu token da API do Google Gemini, necessário pelo Agent Planner para sugerir planos e estruturar a decomposição do backlog.
+- **`PANDORA_API_KEY`**: Defina uma chave aleatória segura começando com `pbx_` (ex: `pbx_suachavealeatoriasegura`). Este é o token mestre usado para autenticar chamadas entre o servidor proxy MCP e a API backend.
+- **`DB_PASSWORD` / `REDIS_PASSWORD` / `MINIO_PASSWORD`**: Defina senhas seguras para o banco de dados Postgres, cache Redis e armazenamento de objetos Minio.
 
-#### Step 2: Configure `.gemini/settings.json` for AI Agents
-To allow AI agents (such as VS Code Copilot, Gemini CLI, or custom subagents) to interact with your workspace, you must register the Briefapp MCP server.
+#### Passo 2: Configurar `.gemini/settings.json` para Agentes de IA
+Para permitir que agentes de IA (como VS Code Copilot, Gemini CLI ou subagentes personalizados) interajam com o seu workspace, você deve registrar o servidor MCP do Briefapp.
 
-Create a `.gemini/settings.json` file in your workspace root (e.g., `./.gemini/settings.json`) with the following JSON content:
+Crie um arquivo `.gemini/settings.json` na raiz do seu workspace (ex: `./.gemini/settings.json`) com o seguinte conteúdo JSON:
 
 ```json
 {
@@ -125,7 +125,7 @@ Create a `.gemini/settings.json` file in your workspace root (e.g., `./.gemini/s
       "command": "node",
       "args": ["./install/proxy/pandora-mcp-proxy.mjs"],
       "env": {
-        "BRIEFAPP_API_KEY": "pbx_your-secure-production-api-key",
+        "BRIEFAPP_API_KEY": "pbx_sua-chave-de-api-segura-de-producao",
         "MCP_ENDPOINT": "http://localhost:8481/mcp"
       }
     }
@@ -134,78 +134,78 @@ Create a `.gemini/settings.json` file in your workspace root (e.g., `./.gemini/s
 ```
 
 > [!IMPORTANT]
-> - Ensure the path in `args` points exactly to the location of the `pandora-mcp-proxy.mjs` script on your disk.
-> - The `BRIEFAPP_API_KEY` value in `env` MUST match the `PANDORA_API_KEY` you defined in your root `.env` file.
+> - Certifique-se de que o caminho em `args` aponte exatamente para o local do script `pandora-mcp-proxy.mjs` no seu disco.
+> - O valor `BRIEFAPP_API_KEY` em `env` DEVE corresponder à `PANDORA_API_KEY` definida no seu arquivo `.env` da raiz.
 
-#### Step 3: Run the Stack
-Run docker compose to start the database, backend api, context RAG engine, and frontend server:
+#### Passo 3: Executar a Stack
+Execute o docker compose para iniciar o banco de dados, API backend, motor de contexto RAG e o servidor frontend:
 ```bash
 docker compose up -d --build
 ```
 
 ---
 
-### 3. Security Best Practices
-- **Never commit `.env` or `.gemini/settings.json`**: These files are included in the [.gitignore](.gitignore) file and contain sensitive private keys.
-- **Rotate keys regularly**: If keys are accidentally pushed to a public remote repository, rotate the `PANDORA_API_KEY` in `.env` and `BRIEFAPP_API_KEY` in your settings files immediately.
+### 3. Melhores Práticas de Segurança
+- **Nunca commite o `.env` ou o `.gemini/settings.json`**: Estes arquivos estão incluídos no [.gitignore](.gitignore) e contêm chaves privadas sensíveis.
+- **Rotacione as chaves regularmente**: Se as chaves forem empurradas acidentalmente para um repositório remoto público, rotacione a `PANDORA_API_KEY` no `.env` e a `BRIEFAPP_API_KEY` nos arquivos de configuração imediatamente.
 
 ---
 
-## Architecture
+## Arquitetura
 
 ```
-backend/AgenticTodoList.Api/         # .NET 10 REST API — domain, services, EF Core
-backend/AgenticTodoList.Api.Tests/   # xUnit integration tests (no mocks, real PostgreSQL)
-frontend/src/                        # React 19 + TypeScript dashboard
-mcp-server-python/server.py          # Python MCP server (FastMCP) — proxy over the REST API
-ops/postgres/data/                   # PostgreSQL data persisted on the host
-ops/postgres/backups/                # Backup files generated on the host
-ops/scripts/                         # PowerShell backup/restore scripts
-docker-compose.yml                   # Full stack definition
+backend/AgenticTodoList.Api/         # .NET 10 REST API — domínio, serviços, EF Core
+backend/AgenticTodoList.Api.Tests/   # Testes de integração xUnit (sem mocks, PostgreSQL real)
+frontend/src/                        # Dashboard React 19 + TypeScript
+mcp-server-python/server.py          # Servidor MCP em Python (FastMCP) — proxy sobre a API REST
+ops/postgres/data/                   # Dados do PostgreSQL persistidos no host
+ops/postgres/backups/                # Arquivos de backup gerados no host
+ops/scripts/                         # Scripts de backup/restauração do PowerShell
+docker-compose.yml                   # Definição completa da stack
 ```
 
 ---
 
-## Features
+## Funcionalidades
 
-### Scrum Management
-- Full CRUD for projects
-- Per-project backlog with priorities and story points
-- Sprint creation with selected backlog items
-- Automatic conversion of backlog items to work items on sprint start
-- Work item status updates
-- Sprint reviews
+### Gestão Scrum
+- CRUD completo para projetos
+- Backlog por projeto com prioridades e story points
+- Criação de sprints com itens selecionados do backlog
+- Conversão automática de itens do backlog para itens de trabalho ao iniciar a sprint
+- Atualização do status dos itens de trabalho
+- Revisões de sprint (Sprint reviews)
 
-### Advanced Task Management (NEW)
-- **Recursive Sub-Tasks** — unlimited task hierarchy with parent auto-completion when all children are Done
-- **Branch Tracking** — associate git branches with individual work items for traceability
-- **Commit IDs Tracking** — backlog items, sprints, and work items can store multiple commit IDs (`commitIds`)
-- **Context-First Backlog Enrichment** — annotate backlog items with tags, wiki references, and constraints
-- Sub-task visibility and status badges on kanban board
-- Parent-child relationship preservation across sprints
+### Gestão Avançada de Tarefas (NOVO)
+- **Sub-Tarefas Recursivas** — hierarquia ilimitada de tarefas com preenchimento automático do pai quando todos os filhos estão "Concluídos" (Done)
+- **Rastreamento de Branches** — associe branches do git a itens de trabalho individuais para rastreabilidade
+- **Rastreamento de Commits** — itens de backlog, sprints e itens de trabalho podem armazenar vários IDs de commit (`commitIds`)
+- **Context-First Backlog** — enriqueça os itens do backlog com tags, referências wiki e restrições
+- Visibilidade de sub-tarefas e emblemas de status no quadro Kanban
+- Preservação do relacionamento pai-filho através das sprints
 
-### Frontend UX Improvements
-- **Responsive App Shell** — main layout now adapts for mobile/tablet/desktop
-- On small screens, the sidebar switches to a temporary drawer with a menu button in the top bar
-- On desktop, the sidebar supports collapsed mode (retratil)
-- Header controls (active project selector and new project action) stack safely on narrow widths
-- Main content area recalculates spacing and offsets per breakpoint to avoid overlap, clipping, and side gaps
-- **Sprints Race Mode** — `/sprints` now includes a `Race (all cards live)` view that lists cards from all project sprints together, with live refresh, assignee/priority filters, sprint/backlog context chips, activity date+time, and descending ordering by latest activity
-- **Task Edit Modal (current data)** — modal pre-fills current work item and latest feedback data (agent/model/ide/tokens/feedback/metadata/branch/commitIds)
+### Melhorias de UX no Frontend
+- **Shell de Aplicativo Responsivo** — o layout principal agora se adapta a celular/tablet/desktop
+- Em telas pequenas, a barra lateral muda para uma gaveta temporária com um botão de menu na barra superior
+- No desktop, a barra lateral suporta modo oculto (retrátil)
+- Controles de cabeçalho (seletor de projeto ativo e ação de novo projeto) empilham-se de forma segura em larguras estreitas
+- A área de conteúdo principal recalcula o espaçamento e deslocamentos por ponto de quebra para evitar sobreposição, cortes e espaços vazios
+- **Modo Race nas Sprints** — `/sprints` agora inclui a visualização `Race (all cards live)` que lista cartões de todas as sprints do projeto juntos, com atualização em tempo real, filtros de responsável/prioridade, chips de contexto da sprint/backlog, data/hora da atividade e ordenação decrescente pela última atividade
+- **Modal de Edição de Tarefas** — o modal pré-preenche as informações atuais do item e os dados de feedback mais recentes (agente/modelo/ide/tokens/feedback/metadados/branch/commitIds)
 
-### Briefapp Knowledge Hub
-- Per-project wiki pages
-- Knowledge checkpoints (context snapshot, decisions, risks, next actions)
-- Agentic run log with token tracking
-- Operational metrics dashboard
+### Hub de Conhecimento Briefapp
+- Páginas de wiki por projeto
+- Checkpoints de conhecimento (foto do contexto, decisões, riscos, próximos passos)
+- Registro de log das execuções do agente com rastreamento de tokens
+- Dashboard de métricas operacionais
 
 ---
 
-## MCP Server — Agentic Integration
+## Servidor MCP — Integração de Agentes
 
-The MCP server runs in Python using the official FastMCP SDK, exposed over HTTP via Docker Compose at `http://127.0.0.1:8481/mcp`.
+O servidor MCP roda em Python usando o SDK oficial FastMCP, exposto via HTTP pelo Docker Compose em `http://127.0.0.1:8481/mcp`.
 
-### Local setup (without Docker)
+### Configuração local (sem Docker)
 
 ```bash
 cd mcp-server-python
@@ -215,41 +215,41 @@ pip install -r requirements.txt
 python server.py
 ```
 
-### Available Tools
+### Ferramentas Disponíveis
 
-| Tool | Description |
+| Ferramenta | Descrição |
 |---|---|
-| `project_list` | List all projects |
-| `project_create` | Create a new project |
-| `project_delete` | Soft-delete a project |
-| `backlog_add` | Add a backlog item |
-| `backlog_list` | List backlog items |
-| `backlog_context_update` | **NEW:** Update backlog item context (tags, wiki refs, constraints) |
-| `sprint_create` | Create a sprint |
-| `workitem_list` | List work items |
-| `workitem_update` | Update work item status |
-| `workitem_add_subtask` | **NEW:** Create a sub-task (recursive) |
-| `knowledge_checkpoint` | Save a knowledge checkpoint |
-| `wiki_add` | Add wiki page |
-| `wiki_list` | List wiki pages |
-| `documentation_add` | Add documentation page |
-| `documentation_list` | List documentation pages |
+| `project_list` | Lista todos os projetos |
+| `project_create` | Cria um novo projeto |
+| `project_delete` | Realiza exclusão lógica de um projeto |
+| `backlog_add` | Adiciona um item ao backlog |
+| `backlog_list` | Lista os itens do backlog |
+| `backlog_context_update` | **NOVO:** Atualiza o contexto do item do backlog (tags, referências wiki, restrições) |
+| `sprint_create` | Cria uma sprint |
+| `workitem_list` | Lista os itens de trabalho |
+| `workitem_update` | Atualiza o status do item de trabalho |
+| `workitem_add_subtask` | **NOVO:** Cria uma sub-tarefa (recursiva) |
+| `knowledge_checkpoint` | Salva um checkpoint de conhecimento |
+| `wiki_add` | Adiciona uma página na wiki |
+| `wiki_list` | Lista páginas da wiki |
+| `documentation_add` | Adiciona uma página de documentação |
+| `documentation_list` | Lista páginas de documentação |
 
-### Available Prompts
+### Prompts Disponíveis
 
-- `briefapp_project_create` — guided project creation
-- `briefapp_sprint_create` — guided sprint creation
-- `briefapp_resources_guide` — full UI and MCP/API resource map
-- `briefapp_context_first_execute` — **NEW:** 5-step context-first execution flow for agents
+- `briefapp_project_create` — criação guiada de projeto
+- `briefapp_sprint_create` — criação guiada de sprint
+- `briefapp_resources_guide` — mapa de recursos completo da UI e MCP/API
+- `briefapp_context_first_execute` — **NOVO:** fluxo de execução guiada por contexto em 5 passos para agentes
 
-### MCP Resources (read-only context for agents)
+### Recursos MCP (contexto somente leitura para agentes)
 
-**Direct:**
+**Diretos:**
 - `briefapp://about`
 - `briefapp://projects/active`
 - `briefapp://projects/all`
 
-**Templates:**
+**Modelos (Templates):**
 - `briefapp://projects/{project_id}/context`
 - `briefapp://projects/{project_id}/dashboard`
 - `briefapp://projects/{project_id}/backlog`
@@ -263,9 +263,9 @@ python server.py
 
 ---
 
-## REST API Reference
+## Referência da API REST
 
-| Method | Endpoint |
+| Método | Endpoint |
 |--------|----------|
 | GET | `/health` |
 | GET | `/api/projects` |
@@ -275,12 +275,12 @@ python server.py
 | GET | `/api/projects/{projectId}/dashboard` |
 | GET | `/api/projects/{projectId}/backlog` |
 | POST | `/api/projects/{projectId}/backlog` |
-| PATCH | `/api/backlog-items/{backlogItemId}/context` | **NEW:** Update tags, wiki refs, constraints |
+| PATCH | `/api/backlog-items/{backlogItemId}/context` | **NOVO:** Atualizar tags, wikis, restrições |
 | GET | `/api/projects/{projectId}/sprints` |
 | POST | `/api/projects/{projectId}/sprints` |
-| PATCH | `/api/sprints/{sprintId}/commits` | **NEW:** Append sprint commit IDs |
+| PATCH | `/api/sprints/{sprintId}/commits` | **NOVO:** Anexar IDs de commits na sprint |
 | POST | `/api/work-items/{workItemId}/status` |
-| POST | `/api/work-items/{workItemId}/sub-tasks` | **NEW:** Create sub-task |
+| POST | `/api/work-items/{workItemId}/sub-tasks` | **NOVO:** Criar sub-tarefa |
 | POST | `/api/sprints/{sprintId}/reviews` |
 | GET | `/api/projects/{projectId}/knowledge` |
 | POST | `/api/projects/{projectId}/wiki` |
@@ -289,69 +289,68 @@ python server.py
 
 ---
 
-## Testing
+## Testes
 
 ```bash
 dotnet test AgenticTodoList.slnx
 dotnet test AgenticTodoList.slnx --collect:"XPlat Code Coverage"
 ```
 
-- Tests passing: **24/24**
-- Line coverage: **97.66%**
+- Testes passando: **24/24**
+- Cobertura de código (Line coverage): **97.66%**
 
-> All tests run against a real PostgreSQL instance — no mocks, no in-memory fakes.
+> Todos os testes rodam contra uma instância real do PostgreSQL — sem mocks ou bancos fakes em memória.
 
 ---
 
-## Backup & Restore
+## Backup e Restauração
 
-With the stack running:
+Com a stack rodando:
 
 ```powershell
-# Backup
+# Fazer backup
 powershell -ExecutionPolicy Bypass -File .\ops\scripts\backup-postgres.ps1
 
-# Restore
-powershell -ExecutionPolicy Bypass -File .\ops\scripts\restore-postgres.ps1 -FilePath .\ops\postgres\backups\<filename>.sql
+# Restaurar
+powershell -ExecutionPolicy Bypass -File .\ops\scripts\restore-postgres.ps1 -FilePath .\ops\postgres\backups\<nome_do_arquivo>.sql
 ```
 
-> On Windows, Docker Desktop must be running for the compose stack to connect to the engine.
+> No Windows, o Docker Desktop precisa estar aberto para que a stack do compose se conecte ao motor.
 
 ---
 
-## Contributing
+## Como Contribuir
 
-Contributions are welcome! Please open an issue or submit a pull request. For major changes, open an issue first to discuss what you would like to change.
+Contribuições são bem-vindas! Por favor, abra uma _issue_ ou envie um _pull request_. Para grandes mudanças, abra uma _issue_ primeiro para discutir o que você gostaria de mudar.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feat/your-feature`)
-3. Commit your changes (`git commit -m 'feat: add your feature'`)
-4. Push to the branch (`git push origin feat/your-feature`)
-5. Open a Pull Request
+1. Faça um Fork do repositório
+2. Crie a branch da sua feature (`git checkout -b feat/sua-feature`)
+3. Faça o commit das alterações (`git commit -m 'feat: adicionar nova feature'`)
+4. Dê push para a branch (`git push origin feat/sua-feature`)
+5. Abra um Pull Request
 
 ---
 
-## License
+## Licença
 
-This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for details.
+Este projeto está licenciado sob a **Apache License 2.0**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ```
-Copyright 2026 Briefapp Todo List Contributors
+Copyright 2026 Contribuidores do Briefapp Todo List
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licenciado sob a Licença Apache, Versão 2.0 (a "Licença");
+você não pode usar este arquivo exceto em conformidade com a Licença.
+Você pode obter uma cópia da Licença em
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+A menos que exigido pela lei aplicável ou acordado por escrito, o software
+distribuído sob a Licença é distribuído "COMO ESTÁ",
+SEM GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO, sejam expressas ou implícitas.
+Consulte a Licença para o idioma específico que rege as permissões e
+limitações sob a Licença.
 ```
 
 ---
 
-Made by [Alfredo Rosa](https://www.linkedin.com/in/alfredo-rosa/)
-
+Feito por [Alfredo Rosa](https://www.linkedin.com/in/alfredo-rosa/)
